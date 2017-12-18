@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="UTF-8">
+		<title>Reservation</title>
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<style>
+			body {
+				padding: 20px;
+				background-color: #dddddd;
+				text-align: center;
+			}
+			h1, h2 {
+				width: 650px;
+				margin: 20px;
+				padding: 20px;
+			}
+			.tableRes {
+				width: 650px;
+				background-color: #ffffff;
+				margin: 20px;
+				padding: 20px;
+				text-align: left;
+			}
+			.tableRow {
+				padding: 5px;
+			}
+			.tableText {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1>Make a Reservation</h1>
+		<form class="tableRes">
+			<div class="tableRow">
+				<div style="width: 150px; display: inline-block;">Name:</div>
+				<div style="width: 400px; display: inline-block;">
+					<input type="text" class="tableText" id="resName">
+				</div>
+			</div>
+			<div class="tableRow">
+				<div style="width: 150px; display: inline-block;">Number:</div>
+				<div style="width: 400px; display: inline-block;">
+					<input type="text" class="tableText" id="resNumber">
+				</div>
+			</div>
+			<div class="tableRow">
+				<div style="width: 150px; display: inline-block;">Email:</div>
+				<div style="width: 400px; display: inline-block;">
+					<input type="text" class="tableText" id="resEmail">
+				</div>
+			</div>
+			<div class="tableRow">
+				<div style="width: 150px; display: inline-block;">ID:</div>
+				<div style="width: 400px; display: inline-block;">
+					<input type="text" class="tableText" id="resID">
+				</div>
+			</div>
+			<div class="tableRow">
+				<button id="resSubmit">Submit</button>
+			</div>
+		</form>
+	</body>
+
+	<script type="text/javascript">
+		var pageURL = window.location.origin;
+		$("#resSubmit").on("click", function() {
+			var newRes = {
+				customerName: $('#resName').val().trim(),
+				phoneNumber: $('#resNumber').val().trim(),
+				customerEmail: $('#resEmail').val().trim(),
+				customerID: $('#resID').val().trim()
+			};
+			$.post(pageURL + "/api/tables", newRes, function(res) {
+				if (res) {
+					alert("Table confirmed!");
+				} else {
+					alert("You have been waitlisted.");
+				}
+				$('#resName').val("");
+				$('#resNumber').val("");
+				$('#resEmail').val("");
+				$('#resID').val("");
+			});
+		});
+	</script>
+</html>

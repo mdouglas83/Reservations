@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="UTF-8">
+		<title>Tables</title>
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<style>
+			body {
+				padding: 20px;
+				background-color: #dddddd;
+				text-align: center;
+			}
+			h1, h2 {
+				width: 60%;
+				margin: 20px;
+				padding: 20px;
+			}
+			.tableRes {
+				width: 60%;
+				background-color: #ffffff;
+				margin: 20px;
+				padding: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Table Reservations + Wait List</h1>
+		<h2>Tables</h2>
+		<div class="tableRes" id="tableList"></div>
+		<h2>Wait List</h2>
+		<div class="tableRes" id="waitList"></div>
+	</body>
+	<script type="text/javascript">
+		var pageURL = window.location.origin;
+		function listTables() {
+			$.ajax({url: pageURL + "/api/tables", method: "GET"}).done(function(data) {
+				for (i = 0; i < data.length; i++) {
+					var newP = $("<p>").html(data[i].customerName);
+					$("#tableList").append(newP);
+				}
+			});
+		}
+		function listWait() {
+			$.ajax({url: pageURL + "/api/waitlist", method: "GET"}).done(function(data) {
+				for (i = 0; i < data.length; i++) {
+					var newP = $("<p>").html(data[i].customerName);
+					$("#waitList").append(newP);
+				}
+			});
+		}
+		listTables();
+		listWait();
+	</script>
+</html>
